@@ -15,14 +15,15 @@ print_usage() {
 
 if [ -z "${1}" ];
 then
-  echo "ngx vers bos olamaz. son vers icin http://nginx.org/packages/centos/7/SRPMS/"
+  echo "No nginx version defined. See http://nginx.org/packages/centos/7/SRPMS/"
   print_usage
   exit 1
 fi
 
 if [ -z "${2}" ];
 then
-  echo "pagespeed versiyonu bos olamaz. son versiyon icin; https://developers.google.com/speed/pagespeed/module/release_notes"
+  echo "No pagespeed version defined. See https://developers.google.com/speed/pagespeed/module/release_notes"
+  echo "Do NOT use the -beta prefix. This script automatically adds it."
   print_usage
   exit 1
 fi
