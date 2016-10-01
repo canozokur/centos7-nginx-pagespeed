@@ -1,0 +1,35 @@
+--- rpmbuild/SPECS/nginx.spec   2016-09-14 16:05:19.000000000 +0300
++++ nginx.spec  2016-10-01 21:54:30.348618787 +0300
+@@ -120,6 +120,7 @@
+         --with-mail_ssl_module \
+         --with-file-aio \
+         --with-ipv6 \
++        --add-module=%{_builddir}/%{name}-%{main_version}/ngx_pagespeed-release-%{pagespeed_version} \
+         %{?with_http2:--with-http_v2_module}")
+ 
+ Summary: High performance web server
+@@ -130,6 +131,7 @@
+ URL: http://nginx.org/
+ Group: %{_group}
+ 
++%define pagespeed_version #{PAGESPEED_VERSION}
+ Source0: http://nginx.org/download/%{name}-%{version}.tar.gz
+ Source1: logrotate
+ Source2: nginx.init.in
+@@ -143,6 +145,7 @@
+ Source11: nginx-debug.service
+ Source12: COPYRIGHT
+ Source13: njs-%{module_njs_shaid}.tar.gz
++Source14: ngx_pagespeed-release-%{pagespeed_version}.tar.gz
+ 
+ License: 2-clause BSD-like license
+ 
+@@ -210,6 +213,8 @@
+ 
+ %prep
+ %setup -q
++tar zxvf %SOURCE14
++%setup -T -D -a 14
+ tar xvzf %SOURCE13
+ cp %{SOURCE2} .
+ sed -e 's|%%DEFAULTSTART%%|2 3 4 5|g' -e 's|%%DEFAULTSTOP%%|0 1 6|g' \
